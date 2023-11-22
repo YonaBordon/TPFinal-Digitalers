@@ -1,12 +1,16 @@
 const express = require('express');
 const cors = require('cors');
+const coockieParser = require('cookie-parser');
 const { dbConnection } = require('../database/config');
 const path = require('path');
+
+const { engine } = require('express-handlebars');
 class Server {
 	constructor() {
 		this.port = process.env.PORT || 3000;
 		this.app = express();
 		this.paths = {
+			public: '',
 			users: '/api/users',
 			products: '/api/products',
 		};
@@ -20,10 +24,26 @@ class Server {
 
 	middlewares() {
 		this.app.use(cors());
+		this.app.use(coockieParser());
 		this.app.use(express.json());
 		this.app.use(express.static('public'));
+
+		this.app.engine(
+			'hbs',
+			engine({
+				extname: '.hbs',
+				defaultLayout: 'layout',
+				runtimeOptions: {
+					allowProtoPropertiesByDefault: true,
+					allowProtoMethodsByDefault: true,
+				},
+				layoutsDir: path.join(this.app.get('views'), 'layouts'),
+				partialsDir: path.join(this.app.get('views'), 'partials'),
+			}),
+		);
+
 		this.app.set('view engine', 'hbs');
-		this.app.set('views', path.join(__dirname, '../views'));
+		this.app.set('views', path.join(__dirname, '../../views'));
 	}
 
 	connectDB() {
@@ -31,12 +51,7 @@ class Server {
 	}
 
 	routes() {
-		this.app.get('/', (req, res) => {
-			res.render('index', {
-				name: 'Carlos Jonatan Bordon',
-				title: 'TP2 - Curso de NodeJS',
-			});
-		});
+		this.app.use(this.paths.public, require('../routes/public'));
 		this.app.use(this.paths.users, require('../routes/users'));
 		this.app.use(this.paths.users, require('../routes/administrators'));
 		this.app.use(this.paths.products, require('../routes/products'));

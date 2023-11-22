@@ -1,0 +1,44 @@
+<style>
+  .contenedorForm {
+    
+    width: 50%;
+    margin: 50px auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f5f5f5;
+  }
+  .contenedorForm form {
+    display: flex;
+    flex-direction: column;
+  }
+  .contenedorForm form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  .contenedorForm form div label {
+    margin-bottom: 5px;
+  }
+  .contenedorForm form div input {
+    padding: 5px;
+  }
+  .contenedorForm form button {
+    padding: 5px;
+  }
+</style>
+
+<div class='contenedorForm'>
+	<form id='loginForm'>
+		<div>
+			<label for='email'>Email</label>
+			<input type='email' name='email' id='email' />
+		</div>
+		<div>
+			<label for='password'>Password</label>
+			<input type='password' name='password' id='password' />
+		</div>
+		<button type='submit'> Ingresar </button>
+	</form>
+</div>
+
+<script src='/js/auth.js'></script>

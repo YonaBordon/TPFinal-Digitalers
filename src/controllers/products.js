@@ -37,6 +37,18 @@ const getProducts = async (req, res = response) => {
 	});
 };
 
+const renderAllProducts = async (req, res = response) => {
+	const isLoggedIn = !!req.cookies.token;
+	const products = await Product.find({ status: true });
+	console.log(products);
+	res.render('index', {
+		title: 'Home',
+		name: 'Home',
+		isLoggedIn,
+		products,
+	});
+}
+
 const getProduct = async (req, res = response) => {
 	const { id } = req.params;
 
@@ -77,4 +89,5 @@ module.exports = {
 	getProduct,
 	updateProduct,
 	deleteProduct,
+	renderAllProducts,
 };

@@ -12,6 +12,7 @@ const userRegister = async (req, res = response) => {
 		const checkEmail = await User.findOne({ email });
 		if (checkEmail) {
 			return res.status(400).json({
+				ok: false,
 				msg: 'El correo ya está registrado',
 			});
 		}
@@ -19,6 +20,7 @@ const userRegister = async (req, res = response) => {
 		const checkUserName = await User.findOne({ username });
 		if (checkUserName) {
 			return res.status(400).json({
+				ok: false,
 				msg: 'El nombre de usuario ya está registrado',
 			});
 		}
@@ -33,12 +35,14 @@ const userRegister = async (req, res = response) => {
 		await user.save();
 
 		res.status(201).json({
+			ok: true,
 			msg: 'register',
 			user,
 		});
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({
+			ok: false,
 			msg: 'Error, contacte al administrador',
 		});
 	}
