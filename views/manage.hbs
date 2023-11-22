@@ -1,0 +1,109 @@
+<style>
+  .list-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 5px;
+    margin: 0 50px;
+    max-width: 1000px;
+  }
+
+  .item-container {
+    display: grid;
+    grid-template-columns: 1fr 10fr 1fr;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+
+  }
+
+  .custom-image {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 80px;
+    width: 120px;
+  }
+
+  .text-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .title-price {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+  }
+
+  .description {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+  }
+
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .btn {
+    margin-bottom: 5px;
+    padding: 5px;
+    font-size: 12px;
+  }
+
+  .selected {
+    background-color: #0d6efd;
+    color: white;
+  }
+</style>
+<div class=" container">
+  <h2> Administra los productos</h2>
+  <div class="list-container">
+    {{#each products}}
+    <div class="item-container">
+      <div class='custom-image' alt='...'
+        style='background-image: url({{this.image}})'>
+      </div>
+      <div class="text-container">
+        <div class="title-price">
+          <h5 class="mb-1">{{this.name}}</h5>
+          <small>{{this.price}}</small>
+        </div>
+        <div class="description">
+          <p class="mb-1">{{this.description}}</p>
+        </div>
+      </div>
+      <div class="actions">
+        <a href="/edit/{{this._id}}" class="btn btn-primary">Editar</a>
+        <a href="/delete/{{this._id}}" class="btn btn-danger">Eliminar</a>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+
+      {{#if (gt currentPage 0)}}
+      <li class="page-item">
+        <a class="page-link" href="/manage/{{minus currentPage 1}}">Previous</a>
+      </li>
+      {{/if}}
+      {{#each pages}}
+      <li class="page-item">
+        <a class="page-link  {{#if (eq @index (parseInt ../currentPage))}}selected{{/if}}"
+          href='/manage/{{this}}'>{{this}}</a>
+      </li>
+      {{/each}}
+      {{#if (lt currentPage pages)}}
+      <li class="page-item">
+        <a class="page-link" href="/manage/{{plus currentPage 1}}">Next</a>
+      </li>
+      {{/if}}
+    </ul>
+  </nav>
+</div>

@@ -48,6 +48,31 @@ const renderAllProducts = async (req, res = response) => {
 	});
 };
 
+const renderPaginatedProducts = async (req, res = response) => {
+	const token = req.cookies.token;
+	const currentPage = req.params.page || 0;
+	const isLoggedIn = !!token;
+
+	const limit = 5;
+	const from = currentPage * limit;
+	const products = await Product.find({ status: true }).skip(from).limit(limit);
+	const total = await Product.countDocuments({ status: true });
+	const pages = Array.from({ length: Math.ceil(total / limit) }, (_, i) => i);
+
+	if (!isLoggedIn) {
+		return res.redirect('/login');
+	}
+
+	res.render('manage', {
+		title: 'Home',
+		name: 'Home',
+		isLoggedIn,
+		products,
+		pages,
+		currentPage,
+	});
+};
+
 const getProduct = async (req, res = response) => {
 	const { id } = req.params;
 
@@ -89,4 +114,5 @@ module.exports = {
 	updateProduct,
 	deleteProduct,
 	renderAllProducts,
+	renderPaginatedProducts,
 };

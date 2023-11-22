@@ -11,6 +11,7 @@ class Server {
 		this.app = express();
 		this.paths = {
 			public: '',
+			privates: '/manage',
 			users: '/api/users',
 			products: '/api/products',
 		};
@@ -34,6 +35,30 @@ class Server {
 			engine({
 				extname: '.hbs',
 				defaultLayout: 'layout',
+				helpers: {
+					eq: function (v1, v2) {
+						return v1 === v2;
+					},
+					gt: function (v1, v2) {
+						return v1 > v2;
+					},
+					lt: function (v1, v2) {
+						return v1 < v2;
+					},
+					plus: function (v1, v2) {
+						return v1 + v2;
+					},
+					minus: function (v1, v2) {
+						return v1 - v2;
+					},
+					let: function (options) {
+						this._let = this._let || {};
+						Object.assign(this._let, options.hash);
+					},
+					parseInt: function (v1) {
+						return parseInt(v1);
+					},
+				},
 				runtimeOptions: {
 					allowProtoPropertiesByDefault: true,
 					allowProtoMethodsByDefault: true,
@@ -53,6 +78,7 @@ class Server {
 
 	routes() {
 		this.app.use(this.paths.public, require('../routes/public'));
+		this.app.use(this.paths.privates, require('../routes/privates'));
 		this.app.use(this.paths.users, require('../routes/users'));
 		this.app.use(this.paths.users, require('../routes/administrators'));
 		this.app.use(this.paths.products, require('../routes/products'));
