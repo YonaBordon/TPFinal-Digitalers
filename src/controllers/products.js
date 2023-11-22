@@ -59,9 +59,6 @@ const renderPaginatedProducts = async (req, res = response) => {
 	const total = await Product.countDocuments({ status: true });
 	const pages = Array.from({ length: Math.ceil(total / limit) }, (_, i) => i);
 
-	if (!isLoggedIn) {
-		return res.redirect('/login');
-	}
 
 	res.render('manage', {
 		title: 'Home',
