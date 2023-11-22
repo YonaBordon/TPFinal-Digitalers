@@ -1,10 +1,24 @@
 <style>
+  .title-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px 50px;
+    max-width: 1000px;
+
+  }
+
+  .title-container h2 {
+    margin: 0;
+  }
+
   .list-container {
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 5px;
     margin: 0 50px;
     max-width: 1000px;
+    margin-bottom: 10px;
   }
 
   .item-container {
@@ -12,7 +26,6 @@
     grid-template-columns: 1fr 10fr 1fr;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 10px;
     padding: 10px;
 
   }
@@ -62,7 +75,10 @@
   }
 </style>
 <div class=" container">
-  <h2> Administra los productos</h2>
+  <div class="title-container">
+    <h2> Administra los productos</h2>
+    <button id="crearProducto" class=" btn btn-success">Crear</button>
+  </div>
   <div class="list-container">
     {{#each products}}
     <div class="item-container">
@@ -79,8 +95,10 @@
         </div>
       </div>
       <div class="actions">
-        <a href="/edit/{{this._id}}" class="btn btn-primary">Editar</a>
-        <a href="/delete/{{this._id}}" class="btn btn-danger">Eliminar</a>
+        <button data-id="{{this._id}}" class="btn btn-primary"
+          id="editarProducto">Editar</button>
+        <button data-id="{{this._id}}" class="btn btn-danger"
+          id="borrarProducto">Eliminar</button>
       </div>
     </div>
     {{/each}}
@@ -107,3 +125,5 @@
     </ul>
   </nav>
 </div>
+
+<script src="/js/fetchProducts.js"></script>

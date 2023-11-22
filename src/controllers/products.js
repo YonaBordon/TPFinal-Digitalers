@@ -76,11 +76,11 @@ const renderPaginatedProducts = async (req, res = response) => {
 const getProduct = async (req, res = response) => {
 	const { id } = req.params;
 
-	const poduct = await Product.findById(id);
+	const product = await Product.findById(id);
 
 	res.json({
 		msg: 'Producto obtenido correctamente',
-		poduct,
+		product,
 	});
 };
 
