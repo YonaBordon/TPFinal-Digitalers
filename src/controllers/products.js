@@ -38,6 +38,7 @@ const getProducts = async (req, res = response) => {
 };
 
 const renderAllProducts = async (req, res = response) => {
+	const isAdmin = req.isAdmin || false;
 	const isLoggedIn = !!req.cookies.token;
 	const products = await Product.find({ status: true });
 	res.render('index', {
@@ -45,6 +46,7 @@ const renderAllProducts = async (req, res = response) => {
 		name: 'Home',
 		isLoggedIn,
 		products,
+		isAdmin,
 	});
 };
 
@@ -59,6 +61,7 @@ const renderPaginatedProducts = async (req, res = response) => {
 	const total = await Product.countDocuments({ status: true });
 	const pages = Array.from({ length: Math.ceil(total / limit) }, (_, i) => i);
 
+	const isAdmin = req.isAdmin || false;
 
 	res.render('manage', {
 		title: 'Home',
@@ -67,6 +70,7 @@ const renderPaginatedProducts = async (req, res = response) => {
 		products,
 		pages,
 		currentPage,
+		isAdmin,
 	});
 };
 
