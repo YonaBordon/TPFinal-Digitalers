@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { validateJWT, validateRole } = require('../middleware');
+const { validateJWT } = require('../middleware');
 
 const {
 	addProduct,
@@ -18,10 +18,10 @@ router.get('/', getProducts);
 
 router.get('/:id', getProduct);
 
-router.post('/', [validateJWT, validateRole, validateProduct], addProduct);
+router.post('/', [validateJWT, validateProduct], addProduct);
 
-router.put('/:id', [validateJWT, validateRole], updateProduct);
+router.put('/:id', [validateJWT], updateProduct);
 
-router.delete('/:id', [validateJWT, validateRole], deleteProduct);
+router.delete('/:id', [validateJWT], deleteProduct);
 
 module.exports = router;
