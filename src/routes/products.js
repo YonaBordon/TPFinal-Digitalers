@@ -10,6 +10,7 @@ const {
 	getProducts,
 	updateProduct,
 } = require('../controllers/products');
+const validateProduct = require('../middleware/validateProduct');
 
 const router = Router();
 
@@ -17,7 +18,7 @@ router.get('/', getProducts);
 
 router.get('/:id', getProduct);
 
-router.post('/', [validateJWT, validateRole], addProduct);
+router.post('/', [validateJWT, validateRole, validateProduct], addProduct);
 
 router.put('/:id', [validateJWT, validateRole], updateProduct);
 

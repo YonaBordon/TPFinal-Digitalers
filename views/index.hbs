@@ -1,11 +1,21 @@
+<style>
+	.custom-image {
+
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-size: cover;
+		height: 200px;
+
+	}
+</style>
+
 <div class='container'>
 	<div class='row'>
-		<div class='col-md-12'>
-			<h1 class='text-center'>Catalogo de productos</h1>
-			<hr />
-			{{#each products}}
+		{{#each products}}
+		<div class='col-md-4'>
 			<div class='card' style='width: 18rem;'>
-				<img src='...' class='card-img-top' alt='...' />
+				<div class='card-img-top fixed-size custom-image' alt='...'
+					style='background-image: url({{this.image}})'></div>
 				<div class='card-body'>
 					<h5 class='card-title'>{{this.name}}</h5>
 					<p class='card-text'>{{this.description}}</p>
@@ -14,7 +24,8 @@
 					<p>{{this.price}}</p>
 				</div>
 			</div>
-			{{/each}}
-
 		</div>
+		{{/each}}
 	</div>
+</div>
+</div>

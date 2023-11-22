@@ -2,9 +2,9 @@ const { response } = require('express');
 const { Product } = require('../models');
 
 const addProduct = async (req, res = response) => {
-	const { name, price, description } = req.body;
+	const { name, price, image, description } = req.body;
 
-	const product = new Product({ name, price, description });
+	const product = new Product({ name, image, price, description });
 
 	const checkIfExist = await Product.findOne({ name });
 	if (checkIfExist) {
@@ -40,14 +40,13 @@ const getProducts = async (req, res = response) => {
 const renderAllProducts = async (req, res = response) => {
 	const isLoggedIn = !!req.cookies.token;
 	const products = await Product.find({ status: true });
-	console.log(products);
 	res.render('index', {
 		title: 'Home',
 		name: 'Home',
 		isLoggedIn,
 		products,
 	});
-}
+};
 
 const getProduct = async (req, res = response) => {
 	const { id } = req.params;

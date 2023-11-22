@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const validateBase64Image = require('../helpers/validateBase64Image');
 
 const ProductSchema = Schema(
 	{
@@ -6,6 +7,10 @@ const ProductSchema = Schema(
 			type: String,
 			required: [true, 'El nombre es requerido'],
 			unique: true,
+		},
+		image: {
+			type: String,
+			required: false,
 		},
 		description: {
 			type: String,
